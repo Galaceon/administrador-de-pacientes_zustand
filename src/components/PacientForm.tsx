@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form"
 import Error from "./Error"
+import type { DraftPacient } from "../types"
 
 export default function PatientForm() {
   
-    const { register, handleSubmit, formState: {errors} } = useForm()
+    const { register, handleSubmit, formState: {errors} } = useForm<DraftPacient>()
 
-    const registerPacient = () => {
-        console.log('probando hehe')
+    const registerPacient = (data: DraftPacient) => {
+        console.log(data)
     }
 
     return (
@@ -111,7 +112,7 @@ export default function PatientForm() {
                         })}
                     />
                     {errors.symptoms && (
-                        <Error>{errors.symptoms?.message?.toString()}</Error>
+                        <Error>{errors.symptoms?.message}</Error>
                     )}
                 </div>
 
