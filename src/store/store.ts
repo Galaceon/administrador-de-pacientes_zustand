@@ -6,6 +6,7 @@ import type { DraftPacient, Pacient } from '../types'
 type PacientState = {
     pacients: Pacient[]
     addPacient: (data: DraftPacient) => void
+    deletePacient: (id: Pacient['id']) => void
 }
 
 // Crear un ID para pacientes
@@ -21,6 +22,11 @@ export const usePacientStore = create<PacientState>((set) => ({
 
         set((state) => ({
             pacients: [...state.pacients, newPacient]
+        }))
+    },
+    deletePacient: (id) => {
+        set((state) => ({
+            pacients: state.pacients.filter(pacient => pacient.id !== id)
         }))
     }
 }))
