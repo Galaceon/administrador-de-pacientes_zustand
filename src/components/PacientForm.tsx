@@ -3,6 +3,7 @@ import Error from "./Error"
 import type { DraftPacient } from "../types"
 import { usePacientStore } from "../store/store"
 import { useEffect } from "react"
+import { toast } from 'react-toastify'
 
 export default function PatientForm() {
   
@@ -27,6 +28,16 @@ export default function PatientForm() {
             updatePacient(data)
         } else {
             addPacient(data)
+            toast.success('Correctamente', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            });
         }
         reset()
     }
