@@ -11,6 +11,7 @@ type PacientState = {
     addPacient: (data: DraftPacient) => void
     deletePacient: (id: Pacient['id']) => void
     getPacientById: (id: Pacient['id']) => void
+    updatePacient: (data: DraftPacient) => void
 }
 
 // Crear un ID para pacientes
@@ -38,6 +39,12 @@ export const usePacientStore = create<PacientState>()(
         getPacientById: (id) => {
             set(() => ({
                 activeId: id
+            }))
+        },
+        updatePacient: (data) => {
+            set((state) => ({
+                pacients: state.pacients.map(pacient => pacient.id === state.activeId ? {id: state.activeId, ...data} : pacient),
+                activeId: ''
             }))
         }
     }))

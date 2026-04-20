@@ -6,7 +6,7 @@ import { useEffect } from "react"
 
 export default function PatientForm() {
   
-    const { addPacient, activeId, pacients } = usePacientStore()
+    const { addPacient, activeId, pacients, updatePacient } = usePacientStore()
 
     const { register, handleSubmit, setValue, formState: {errors}, reset } = useForm<DraftPacient>()
 
@@ -23,7 +23,11 @@ export default function PatientForm() {
     }, [activeId])
 
     const registerPacient = (data: DraftPacient) => {
-        addPacient(data)
+        if(activeId) {
+            updatePacient(data)
+        } else {
+            addPacient(data)
+        }
         reset()
     }
 
