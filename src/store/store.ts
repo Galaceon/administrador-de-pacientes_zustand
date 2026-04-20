@@ -5,8 +5,10 @@ import type { DraftPacient, Pacient } from '../types'
 // Type del Store
 type PacientState = {
     pacients: Pacient[]
+    activeId: Pacient['id']
     addPacient: (data: DraftPacient) => void
     deletePacient: (id: Pacient['id']) => void
+    getPacientById: (id: Pacient['id']) => void
 }
 
 // Crear un ID para pacientes
@@ -17,6 +19,7 @@ const createPacient = (pacient: DraftPacient) : Pacient => {
 // Es como un useReducer, tiene su state y la accion con la que cambiara el state
 export const usePacientStore = create<PacientState>((set) => ({
     pacients: [],
+    activeId: '',
     addPacient: (data) => {
         const newPacient = createPacient(data)
 
@@ -28,5 +31,11 @@ export const usePacientStore = create<PacientState>((set) => ({
         set((state) => ({
             pacients: state.pacients.filter(pacient => pacient.id !== id)
         }))
+    },
+    getPacientById: (id) => {
+        set(() => ({
+            activeId: id
+        }))
     }
+
 }))
