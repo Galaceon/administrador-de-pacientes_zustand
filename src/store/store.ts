@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
+
 import type { DraftPacient, Pacient } from '../types'
 
 // Type del Store
@@ -17,25 +19,26 @@ const createPacient = (pacient: DraftPacient) : Pacient => {
 }
 
 // Es como un useReducer, tiene su state y la accion con la que cambiara el state
-export const usePacientStore = create<PacientState>((set) => ({
-    pacients: [],
-    activeId: '',
-    addPacient: (data) => {
-        const newPacient = createPacient(data)
+export const usePacientStore = create<PacientState>()(
+    devtools((set) => ({
+        pacients: [],
+        activeId: '',
+        addPacient: (data) => {
+            const newPacient = createPacient(data)
 
-        set((state) => ({
-            pacients: [...state.pacients, newPacient]
-        }))
-    },
-    deletePacient: (id) => {
-        set((state) => ({
-            pacients: state.pacients.filter(pacient => pacient.id !== id)
-        }))
-    },
-    getPacientById: (id) => {
-        set(() => ({
-            activeId: id
-        }))
-    }
-
-}))
+            set((state) => ({
+                pacients: [...state.pacients, newPacient]
+            }))
+        },
+        deletePacient: (id) => {
+            set((state) => ({
+                pacients: state.pacients.filter(pacient => pacient.id !== id)
+            }))
+        },
+        getPacientById: (id) => {
+            set(() => ({
+                activeId: id
+            }))
+        }
+    }))
+)
