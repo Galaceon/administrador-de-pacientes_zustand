@@ -26,9 +26,19 @@ export default function PatientForm() {
     const registerPacient = (data: DraftPacient) => {
         if(activeId) {
             updatePacient(data)
+            toast.success('Paciente Actualizado Correctamente', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            });
         } else {
             addPacient(data)
-            toast.success('Correctamente', {
+            toast.success('Paciente Registrado Correctamente', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

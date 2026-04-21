@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
 import type { DraftPacient, Pacient } from '../types'
 
@@ -21,7 +21,8 @@ const createPacient = (pacient: DraftPacient) : Pacient => {
 
 // Es como un useReducer, tiene su state y la accion con la que cambiara el state
 export const usePacientStore = create<PacientState>()(
-    devtools((set) => ({
+    devtools(
+    persist((set) => ({
         pacients: [],
         activeId: '',
         addPacient: (data) => {
@@ -47,5 +48,7 @@ export const usePacientStore = create<PacientState>()(
                 activeId: ''
             }))
         }
+    }), {
+        name: 'patient-storage'
     }))
 )
